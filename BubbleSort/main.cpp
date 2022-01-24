@@ -1,6 +1,7 @@
 #include <iostream>
 
-void printArray(int arr[], int arrSize)
+template <typename T>
+void printArray(T arr[], int arrSize)
 {
 	for (int i = 0; i < arrSize; i++)
 	{
@@ -8,9 +9,10 @@ void printArray(int arr[], int arrSize)
 	}
 }
 
-void bubbleSort(int numArray[], int arrSize)
+template <typename T>
+void bubbleSort(T numArray[], int arrSize)
 {
-	int temp;
+	T temp;
 
 	for (int i = 0; i < arrSize - 1; i++)
 	{
@@ -28,9 +30,10 @@ void bubbleSort(int numArray[], int arrSize)
 	printArray(numArray, arrSize);
 }
 
-void insertionSort(int arr[], int arrSize)
+template <typename T>
+void insertionSort(T arr[], int arrSize)
 {
-	int j, key;
+	T j, key;
 
 	//For each value in array
 	for (int i = 1; i < arrSize; i++)
@@ -61,7 +64,7 @@ int main()
 
 	int altNumbers[] = { 45, 12, 3, 20, 66, 18, 7 };
 
-	/*bubbleSort(numbers, 6);*/
+	bubbleSort(numbers, 6);
 
 	insertionSort(altNumbers, 7);
 
