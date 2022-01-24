@@ -57,7 +57,7 @@ void insertionSort(int arr[], int arrSize)
 
 int main()
 {
-	/*int numbers[] = { 5, 3, 1, 4, 9, 7 };*/
+	int numbers[] = { 5, 3, 1, 4, 9, 7 };
 
 	int altNumbers[] = { 45, 12, 3, 20, 66, 18, 7 };
 
