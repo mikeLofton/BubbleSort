@@ -10,13 +10,15 @@ public:
 	/// Add a new item to the end of the array
 	/// </summary>
 	/// <param name="item">The item to add</param>
-	void addItem(T* item);
+	void addItem(T item);
+
+	void addItems(T items[], int size);
 
 	/// <summary>
 	/// Remove a item from the array
 	/// </summary>
 	/// <param name="item">The item to remove</param>
-	bool removeItem(T* item);
+	bool removeItem(T item);
 
 	/// <summary>
 	/// Insertion sort items
@@ -28,7 +30,7 @@ public:
 	/// </summary>
 	/// <param name="index">The index in the array</param>
 	/// <returns>The item</returns>
-	T* getItem(int index);
+	T getItem(int index);
 
 	/// <summary>
 	/// Gets the length of the array
@@ -37,40 +39,60 @@ public:
 	int getLength() { return m_length; }
 
 private:
-	T** m_items;
+	T* m_items;
 	int m_length;
 };
 
 template<typename T>
-inline void DynamicArray<T>::addItem(T* item)
+inline DynamicArray<T>::DynamicArray()
 {
-	T** newArray = new T * [m_length + 1];
+	m_length = 0;
+	m_items = nullptr;
+}
 
-	for (int i = 0; i < m_length; i++)
+template<typename T>
+inline DynamicArray<T>::~DynamicArray()
+{
+}
+
+template<typename T>
+inline void DynamicArray<T>::addItem(T item)
+{
+	T* newArray = new T[getLength() + 1];
+
+	for (int i = 0; i < getLength(); i++)
 	{
 		newArray[i] = m_items[i];
 	}
 
-	newArray[m_length] = item;
+	newArray[getLength()] = item;
+	delete[] m_items;
 	m_items = newArray;
 	m_length++;
 }
 
 template<typename T>
-inline bool DynamicArray<T>::removeItem(T* item)
+inline void DynamicArray<T>::addItems(T items[], int size)
 {
-	if (!item || m_length <= 0)
+	for (int i = 0; i < size; i++)
+		addItem(items[i]);
+}
+
+template<typename T>
+inline bool DynamicArray<T>::removeItem(T item)
+{
+	if (!item || getLength() <= 0)
 		return false;
 
 	bool itemRemoved = false;
 
-	T** newArray = new T * [m_length - 1];
+	T* newArray = new T[getLength() - 1];
 
 	int j = 0;
 
-	for (int i = 0; i < m_length; i++)
+	for (int i = 0; i < getLength(); i++)
 	{
-		if (item != m_items[i])
+		if (item != m_items[i] || itemRemoved)
 		{
 			newArray[j] = m_items[i];
 			j++;
@@ -83,6 +105,7 @@ inline bool DynamicArray<T>::removeItem(T* item)
 
 	if (itemRemoved)
 	{
+		delete[] m_items;
 		m_items = newArray;
 		m_length--;
 	}
@@ -93,10 +116,11 @@ inline bool DynamicArray<T>::removeItem(T* item)
 template<typename T>
 inline void DynamicArray<T>::sortItems()
 {
-	T j, key;
+	T key;
+	int j = 0;
 
 	//For each value in array
-	for (int i = 1; i < m_length; i++)
+	for (int i = 1; i < getLength(); i++)
 	{
 		//Set key to value at the current index
 		key = m_items[i];
@@ -117,10 +141,10 @@ inline void DynamicArray<T>::sortItems()
 }
 
 template<typename T>
-inline T* DynamicArray<T>::getItem(int index)
+inline T DynamicArray<T>::getItem(int index)
 {
-	if (index < 0 || index >= m_length)
-		return nullptr;
+	if (index < 0 || index >= getLength())
+		return T();
 
 	return m_items[index];
 }

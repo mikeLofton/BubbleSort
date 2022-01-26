@@ -1,4 +1,5 @@
 #include <iostream>
+#include "DynamicArray.h"
 
 template <typename T>
 void printArray(T arr[], int arrSize)
@@ -58,15 +59,33 @@ void insertionSort(T arr[], int arrSize)
 	printArray(arr, arrSize);
 }
 
+void printDynamicArray(DynamicArray<int> arr)
+{
+	for (int i = 0; i < arr.getLength(); i++)
+		std::cout << arr.getItem(i) << std::endl;
+}
+
 int main()
 {
 	int numbers[] = { 5, 3, 1, 4, 9, 7 };
 
 	int altNumbers[] = { 45, 12, 3, 20, 66, 18, 7 };
 
-	bubbleSort(numbers, 6);
+	DynamicArray<int> arr = DynamicArray<int>();
 
-	insertionSort(altNumbers, 7);
+	arr.addItem(1);
+	arr.addItem(4);
+	arr.addItem(6);
+	arr.addItem(2);
+	arr.addItem(5);
+
+	printDynamicArray(arr);
+
+	arr.sortItems();
+
+	std::cout << std::endl;
+
+	printDynamicArray(arr);
 
 	return 0;
 }
